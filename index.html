@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caroline Zhang</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Caroline Zhang — NYU Stern freshman studying Finance + Philosophy. Founder of FUN'D, a comedy pitch show in New York.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a fund-style one-pager. Hero + deal memo, a syllogism for the "about", ventures as portfolio companies, track record, contact. */
+:root {
+  --bg: #efe8dc;          /* beige paper */
+  --surface: #f7f2e9;
+  --line: #d8cdbb;
+  --ink: #1d1a36;         /* indigo ink */
+  --muted: #5d5872;
+  --purple: #5a3ea6;
+  --blue: #2c58b5;
+  --sand: #c8b48f;
+  --glow: rgba(90, 62, 166, 0.10);
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --max: 1120px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14122a; --surface: #1c1a38; --line: #2f2c52; --ink: #ede5d6; --muted: #a9a3bf;
+    --purple: #ae98f2; --blue: #82a5f2; --sand: #c9b48c; --glow: rgba(174, 152, 242, 0.12);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14122a; --surface: #1c1a38; --line: #2f2c52; --ink: #ede5d6; --muted: #a9a3bf;
+  --purple: #ae98f2; --blue: #82a5f2; --sand: #c9b48c; --glow: rgba(174, 152, 242, 0.12);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 720px) {
+  .wrap { padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); }
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.05; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(2.1rem, 4.5vw, 3rem); }
+h3 { font-size: 1.7rem; }
+
+/* ---------- nav ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.mark { font-family: var(--display); font-size: 1.35rem; font-weight: 600; text-decoration: none; letter-spacing: 0.01em; }
+.mark span { color: var(--purple); font-style: italic; }
+.nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; font-size: 0.9rem; font-weight: 500; }
+.nav ul a { text-decoration: none; color: var(--muted); }
+.nav ul a:hover { color: var(--ink); }
+@media (max-width: 640px) { .nav ul li:not(:last-child) { display: none; } }
+
+/* ---------- ticker ---------- */
+.ticker { border-bottom: 1px solid var(--line); overflow: hidden; font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.ticker-track { display: flex; gap: 48px; padding-block: 9px; width: max-content; animation: tick 38s linear infinite; }
+.ticker-track span { white-space: nowrap; }
+.ticker b { color: var(--ink); font-weight: 500; }
+.up { color: var(--blue); }
+.bld { color: var(--purple); }
+@keyframes tick { to { transform: translateX(-50%); } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(600px 320px at 85% 10%, var(--glow), transparent 70%),
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 48px;
+  opacity: 0.55;
+  mask-image: linear-gradient(to bottom, #000 30%, transparent);
+}
+.hero .wrap {
+  position: relative;
+  display: grid; gap: 48px; align-items: center;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  padding-block: 88px 96px;
+}
+@media (max-width: 880px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 56px 64px; } }
+.hero h1 { font-size: clamp(3.4rem, 9vw, 6.6rem); font-weight: 500; letter-spacing: -0.01em; margin-top: 18px; }
+.hero h1 em { color: var(--purple); }
+.lede { font-size: 1.15rem; color: var(--muted); max-width: 34em; margin: 24px 0 0; }
+.lede strong { color: var(--ink); font-weight: 600; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 600 0.92rem var(--body); text-decoration: none;
+  padding: 12px 20px; border-radius: 999px; border: 1px solid var(--ink);
+  cursor: pointer; transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+.btn-solid { background: var(--ink); color: var(--bg); }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn:hover { transform: translateY(-2px); }
+.btn-ghost:hover { background: var(--ink); color: var(--bg); }
+
+/* deal memo card */
+.memo {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 30px 60px -30px rgba(29, 26, 54, 0.35);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  overflow: hidden;
+}
+.memo-head { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); color: var(--muted); }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.dot:nth-child(1) { background: var(--purple); } .dot:nth-child(2) { background: var(--blue); } .dot:nth-child(3) { background: var(--sand); }
+.memo-head span:last-child { margin-left: auto; }
+.memo dl { margin: 0; padding: 8px 18px 16px; }
+.memo .row { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--line); }
+.memo .row:last-child { border-bottom: 0; }
+.memo dt { color: var(--muted); }
+.memo dd { margin: 0; color: var(--ink); }
+.memo dd .tag { color: var(--blue); }
+
+/* ---------- sections ---------- */
+section { padding-block: 96px; border-top: 1px solid var(--line); }
+@media (max-width: 640px) { section { padding-block: 64px; } }
+.sec-head { display: grid; gap: 14px; margin-bottom: 48px; max-width: 40em; }
+.sec-head p { color: var(--muted); margin: 0; }
+
+/* ---------- syllogism / about ---------- */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+@media (max-width: 880px) { .about { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
+.argument { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.argument li { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.argument li:first-child { border-top: 1px solid var(--line); }
+.argument .lbl { font-family: var(--mono); font-size: 0.78rem; color: var(--purple); padding-top: 0.5em; }
+.argument p { margin: 0; font-family: var(--display); font-size: 1.6rem; line-height: 1.25; }
+.argument li.therefore .lbl { color: var(--blue); font-size: 1.2rem; padding-top: 0.1em; }
+.argument li.therefore p { font-style: italic; color: var(--purple); }
+.bio p { margin: 0 0 18px; max-width: 34em; }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; margin-top: 32px; }
+.facts h4 { margin: 0 0 10px; font-family: var(--mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 0.85rem; font-weight: 500; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.chip.k { border-color: color-mix(in srgb, var(--purple) 45%, var(--line)); color: var(--purple); }
+@media (max-width: 480px) { .facts { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- portfolio ---------- */
+.portfolio { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 760px) { .portfolio { grid-template-columns: minmax(0, 1fr); } }
+.co {
+  position: relative;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition: border-color .25s ease, transform .25s ease;
+}
+.co:hover { border-color: var(--purple); transform: translateY(-3px); }
+.co.flagship { grid-column: 1 / -1; background: linear-gradient(135deg, color-mix(in srgb, var(--purple) 10%, var(--surface)), color-mix(in srgb, var(--blue) 8%, var(--surface))); }
+.co-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.co-meta { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.stage { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; }
+.stage::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.stage.live { color: var(--blue); }
+.stage.build { color: var(--purple); }
+.co h3 { font-size: 2rem; }
+.co.flagship h3 { font-size: clamp(2.4rem, 5vw, 3.4rem); }
+.co p { margin: 0; color: var(--muted); max-width: 40em; }
+.terms { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--mono); font-size: 0.78rem; color: var(--muted); margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); }
+.terms b { color: var(--ink); font-weight: 500; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.links a { font-family: var(--mono); font-size: 0.82rem; text-decoration: none; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--ink); }
+.links a:hover { background: var(--ink); color: var(--bg); }
+
+/* ---------- record ---------- */
+.record { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; }
+@media (max-width: 880px) { .record { grid-template-columns: minmax(0, 1fr); gap: 48px; } }
+.record h3 { font-size: 1.3rem; font-family: var(--mono); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.ledger { list-style: none; margin: 0; padding: 0; }
+.ledger li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 20px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.ledger .t { font-family: var(--display); font-size: 1.5rem; font-weight: 600; line-height: 1.2; }
+.ledger .s { grid-column: 1; color: var(--muted); font-size: 0.95rem; }
+.ledger .k { grid-row: 1; grid-column: 2; font-family: var(--mono); font-size: 0.75rem; color: var(--purple); white-space: nowrap; }
+
+/* ---------- quote ---------- */
+.quote { text-align: left; }
+.quote blockquote { margin: 0; font-family: var(--display); font-style: italic; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.2; max-width: 22em; text-wrap: balance; }
+.quote blockquote::before { content: "“"; color: var(--purple); }
+.quote blockquote::after { content: "”"; color: var(--purple); }
+.quote cite { display: block; margin-top: 18px; font-style: normal; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); letter-spacing: 0.08em; }
+
+/* ---------- contact ---------- */
+.contact { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: end; }
+@media (max-width: 880px) { .contact { grid-template-columns: minmax(0, 1fr); } }
+.contact h2 { font-size: clamp(2.6rem, 6vw, 4.4rem); }
+.contact h2 em { color: var(--purple); }
+.mailbox { display: grid; gap: 14px; }
+.email { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-family: var(--mono); font-size: 0.95rem; }
+.email a { text-decoration: none; user-select: all; overflow-wrap: anywhere; min-width: 0; }
+.copy { font: 500 0.8rem var(--mono); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+.copy:hover { background: var(--ink); color: var(--bg); }
+.socials { display: flex; flex-wrap: wrap; gap: 10px; }
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+
+/* entrance: visible at rest, gentle lift on load */
+.rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.rise.d1 { animation-delay: .08s; } .rise.d2 { animation-delay: .16s; } .rise.d3 { animation-delay: .24s; } .rise.d4 { animation-delay: .32s; }
+@keyframes rise { from { transform: translateY(14px); opacity: 0.001; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise, .ticker-track { animation: none; }
+  .btn, .co { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="#top">C<span>Z</span></a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#ventures">Ventures</a></li>
+      <li><a href="#record">Record</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span><b>FUN'D</b> <span class="up">▲ LIVE</span> · comedy pitch show, NYC</span>
+    <span><b>TOGETHER</b> <span class="bld">◆ BUILDING</span> · event infrastructure</span>
+    <span><b>BITE</b> <span class="bld">◆ BUILDING</span> · in progress</span>
+    <span><b>CAROLINE'S SYSTEM</b> <span class="up">▲ LIVE</span> · operating system</span>
+    <span><b>NYU STERN</b> · Finance + Philosophy · Class of 2030</span>
+    <span><b>SAN DIEGO → NEW YORK</b> · 2,430 mi</span>
+    <span><b>FUN'D</b> <span class="up">▲ LIVE</span> · comedy pitch show, NYC</span>
+    <span><b>TOGETHER</b> <span class="bld">◆ BUILDING</span> · event infrastructure</span>
+    <span><b>BITE</b> <span class="bld">◆ BUILDING</span> · in progress</span>
+    <span><b>CAROLINE'S SYSTEM</b> <span class="up">▲ LIVE</span> · operating system</span>
+    <span><b>NYU STERN</b> · Finance + Philosophy · Class of 2030</span>
+    <span><b>SAN DIEGO → NEW YORK</b> · 2,430 mi</span>
+  </div>
+</div>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow rise">Finance + Philosophy · NYU Stern</div>
+        <h1 class="rise d1">Caroline <em>Zhang</em></h1>
+        <p class="lede rise d2">I build rooms where <strong>founders, ideas, and audiences</strong> meet. Freshman at NYU Stern from San Diego, founder of <strong>FUN'D</strong>, and always working on the next venture.</p>
+        <div class="cta rise d3">
+          <a class="btn btn-solid" href="#ventures">See the portfolio →</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+
+      <aside class="memo rise d4" aria-label="Quick facts">
+        <div class="memo-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>deal_memo.txt</span></div>
+        <dl>
+          <div class="row"><dt>Founder</dt><dd>Caroline Zhang</dd></div>
+          <div class="row"><dt>Based</dt><dd>New York, NY <span class="tag">← San Diego, CA</span></dd></div>
+          <div class="row"><dt>Stage</dt><dd>Freshman, NYU Stern</dd></div>
+          <div class="row"><dt>Focus</dt><dd>Finance × Philosophy</dd></div>
+          <div class="row"><dt>Edge</dt><dd>Operations, ideation, leadership</dd></div>
+          <div class="row"><dt>Status</dt><dd><span class="tag">● Open to conversations</span></dd></div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">01 · The thesis</div>
+        <h2>An argument for how I work</h2>
+      </div>
+      <div class="about">
+        <ol class="argument">
+          <li><span class="lbl">P1</span><p>Markets run on people before they run on numbers.</p></li>
+          <li><span class="lbl">P2</span><p>People show up for good stories, good company, and a good laugh.</p></li>
+          <li class="therefore"><span class="lbl">∴</span><p>Build the room where all three happen.</p></li>
+        </ol>
+        <div class="bio">
+          <p>I study finance to understand how capital moves, and philosophy to ask why it should. Most of my time goes into building: shows, systems, and products that bring scattered people together.</p>
+          <p>Before New York I grew up in San Diego and went to Torrey Pines High School. Now I host events, pitch ideas, and play pickup basketball whenever I can find a court.</p>
+          <div class="facts">
+            <div>
+              <h4>Skills</h4>
+              <div class="chips">
+                <span class="chip k">Operations</span><span class="chip k">Ideation</span><span class="chip k">Leadership</span><span class="chip k">Entrepreneurship</span>
+              </div>
+            </div>
+            <div>
+              <h4>Interests</h4>
+              <div class="chips">
+                <span class="chip">Venture</span><span class="chip">Philosophy</span><span class="chip">Stand-up comedy</span><span class="chip">Hosting events</span><span class="chip">Basketball</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ventures">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">02 · Portfolio</div>
+        <h2>Ventures</h2>
+        <p>What I've launched and what's in the pipeline.</p>
+      </div>
+      <div class="portfolio">
+        <article class="co flagship">
+          <div class="co-top"><span class="co-meta">Flagship · Events · New York</span><span class="stage live">Live</span></div>
+          <h3>FUN'D</h3>
+          <p>A comedy pitch show. Founders pitch, the room laughs, and the best ideas get remembered. FUN'D brings startup culture and stand-up together on one stage in New York.</p>
+          <div class="links">
+            <a href="https://instagram.com/fund.nyc" target="_blank" rel="noopener">Instagram · @fund.nyc ↗</a>
+            <a href="https://luma.com/fundnyc" target="_blank" rel="noopener">Luma · fundnyc ↗</a>
+          </div>
+          <div class="terms"><span>Role <b>Founder &amp; host</b></span><span>Sector <b>Events × Venture</b></span><span>City <b>NYC</b></span></div>
+        </article>
+
+        <article class="co">
+          <div class="co-top"><span class="co-meta">Productivity · Personal</span><span class="stage live">Live</span></div>
+          <h3>Caroline's System</h3>
+          <p>My personal operating system for running projects, events, and school without dropping anything.</p>
+          <div class="terms"><span>Role <b>Creator</b></span><span>Sector <b>Operations</b></span></div>
+        </article>
+
+        <article class="co">
+          <div class="co-top"><span class="co-meta">Consumer · Stealth</span><span class="stage build">Building</span></div>
+          <h3>BITE</h3>
+          <p>In progress. Details coming soon.</p>
+          <div class="terms"><span>Role <b>Founder</b></span><span>Stage <b>Pre-seed</b></span></div>
+        </article>
+
+        <article class="co flagship">
+          <div class="co-top"><span class="co-meta">Infrastructure · Events</span><span class="stage build">Building</span></div>
+          <h3>Together</h3>
+          <p>A backend event-planning platform that weaves fragmented markets together. Venues, vendors, hosts, and guests are scattered across a dozen tools today. Together connects them into one system.</p>
+          <div class="terms"><span>Role <b>Founder</b></span><span>Sector <b>Marketplaces</b></span><span>Stage <b>Pre-seed</b></span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="record">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">03 · Track record</div>
+        <h2>Education &amp; honors</h2>
+      </div>
+      <div class="record">
+        <div>
+          <h3>Education</h3>
+          <ul class="ledger">
+            <li><span class="t">NYU Stern School of Business</span><span class="k">2026 – 2030</span><span class="s">B.S. Business · Finance + Philosophy · Breakthrough Scholar</span></li>
+            <li><span class="t">Torrey Pines High School</span><span class="k">San Diego</span><span class="s">San Diego, California</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Honors</h3>
+          <ul class="ledger">
+            <li><span class="t">Hodson Scholar</span><span class="k">JHU</span><span class="s">Johns Hopkins University</span></li>
+            <li><span class="t">Breakthrough Scholar</span><span class="k">NYU Stern</span><span class="s">Stern School of Business</span></li>
+            <li><span class="t">Rising Star Award</span><span class="k">Encinitas</span><span class="s">Encinitas Chamber of Commerce</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <div class="wrap">
+      <blockquote>The unexamined life is not worth living.</blockquote>
+      <cite>Socrates, in Plato's Apology · 38a</cite>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact">
+      <div>
+        <div class="eyebrow">04 · Contact</div>
+        <h2 style="margin-top:14px">Let's start a <em>conversation.</em></h2>
+      </div>
+      <div class="mailbox">
+        <div class="email">
+          <a id="email" href="mailto:caroline.zhang@stern.nyu.edu">caroline.zhang@stern.nyu.edu</a>
+          <button class="copy" id="copy" type="button">Copy</button>
+        </div>
+        <div class="socials links">
+          <a href="https://instagram.com/fund.nyc" target="_blank" rel="noopener">FUN'D on Instagram ↗</a>
+          <a href="https://luma.com/fundnyc" target="_blank" rel="noopener">Upcoming shows ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Caroline Zhang</span>
+    <span>New York ⟷ San Diego</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('copy').addEventListener('click', function () {
+    var btn = this, text = document.getElementById('email').textContent;
+    function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done('Selected');
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done('Copied'); }, fallback);
+    } else { fallback(); }
+  });
+</script>
+</body>
+</html>
