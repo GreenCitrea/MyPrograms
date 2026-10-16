@@ -235,6 +235,21 @@ section[style*="--art"]::before {
 .links a { font-family: var(--mono); font-size: 0.82rem; text-decoration: none; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--ink); }
 .links a:hover { background: var(--ink); color: var(--bg); }
 
+/* ---------- experience ---------- */
+.roles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+@media (max-width: 760px) { .roles { grid-template-columns: minmax(0, 1fr); } }
+.role { display: flex; flex-direction: column; gap: 16px; padding: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.role-kind { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple); }
+.role-head { display: flex; align-items: center; gap: 16px; }
+.role-head h3 { font-size: 1.8rem; }
+.role-title { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); margin-top: 6px; }
+.role p { margin: 0; color: var(--muted); }
+.asks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.asks li { display: grid; grid-template-columns: 1.4em minmax(0, 1fr); color: var(--ink); }
+.asks li::before { content: "→"; color: var(--purple); font-family: var(--mono); }
+.role .email { margin-top: auto; font-size: 0.85rem; padding: 12px 14px; }
+.logo.tile { background: #f7f2e9; padding: 4px; border: 1px solid var(--line); object-fit: contain; }
+
 /* ---------- record ---------- */
 .record { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; }
 @media (max-width: 880px) { .record { grid-template-columns: minmax(0, 1fr); gap: 48px; } }
@@ -288,6 +303,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#ventures">Ventures</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#record">Record</a></li>
       <li><a href="https://www.linkedin.com/in/caroline-zhang123/" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -425,10 +441,53 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 
+  <section id="experience" style="--art: url(assets/art/temple.svg); --art-pos: left bottom; --art-size: min(600px, 80%)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">03 · Experience</div>
+        <h2>Experience &amp; volunteering</h2>
+      </div>
+      <div class="roles">
+        <article class="role">
+          <div class="role-kind">Experience</div>
+          <div class="role-head">
+            <img class="logo" src="assets/logos/bassaam.svg" alt="Bassaam Capital logo" width="44" height="44">
+            <div><h3>Bassaam Capital</h3><div class="role-title">Analyst</div></div>
+          </div>
+          <p>Reach out about Bassaam Capital, investment opportunities, or working together.</p>
+          <div class="links"><a href="https://www.bassaam.com/" target="_blank" rel="noopener">bassaam.com ↗</a></div>
+          <div class="email">
+            <a id="email-bassaam" href="mailto:caroline.zhang@bassaam.com">caroline.zhang@bassaam.com</a>
+            <button class="copy" type="button" data-copy="email-bassaam">Copy</button>
+          </div>
+        </article>
+
+        <article class="role">
+          <div class="role-kind">Volunteering</div>
+          <div class="role-head">
+            <img class="logo tile" src="assets/logos/nyphilosophy.png" alt="The New York Philosophy Club logo" width="44" height="44">
+            <div><h3>The New York Philosophy Club</h3><div class="role-title">Co-organizer &amp; Speaker Relations</div></div>
+          </div>
+          <p>I help run the club and bring philosophers into the room. If you work in philosophy, I'd love to hear from you. Write to me if you want to:</p>
+          <ul class="asks">
+            <li>Give a talk to the club</li>
+            <li>Co-host a philosophy event</li>
+            <li>Simply talk about philosophy</li>
+          </ul>
+          <div class="links"><a href="https://nyphilosophy.org/" target="_blank" rel="noopener">nyphilosophy.org ↗</a></div>
+          <div class="email">
+            <a id="email-philosophy" href="mailto:caroline@nyphilosophy.org">caroline@nyphilosophy.org</a>
+            <button class="copy" type="button" data-copy="email-philosophy">Copy</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section id="record" style="--art: url(assets/art/arches.svg); --art-pos: right bottom">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">03 · Track record</div>
+        <div class="eyebrow">04 · Track record</div>
         <h2>Education &amp; honors</h2>
       </div>
       <div class="record">
@@ -461,14 +520,14 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   <section id="contact" style="--art: url(assets/art/skyline.svg); --art-pos: right bottom; --art-size: min(700px, 90%)">
     <div class="wrap contact">
       <div>
-        <div class="eyebrow">04 · Contact</div>
+        <div class="eyebrow">05 · Contact</div>
         <p class="audience"><span>Founders</span><span>VCs</span><span>People who want to build things together</span><span>Anyone</span></p>
         <h2 style="margin-top:14px">Let's start a <em>conversation.</em></h2>
       </div>
       <div class="mailbox">
         <div class="email">
           <a id="email" href="mailto:caroline.zhang@stern.nyu.edu">caroline.zhang@stern.nyu.edu</a>
-          <button class="copy" id="copy" type="button">Copy</button>
+          <button class="copy" type="button" data-copy="email">Copy</button>
         </div>
         <div class="socials links">
           <a href="https://www.linkedin.com/in/caroline-zhang123/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -488,16 +547,18 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 </footer>
 
 <script>
-  document.getElementById('copy').addEventListener('click', function () {
-    var btn = this, text = document.getElementById('email').textContent;
-    function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); }
-    function fallback() {
-      var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
-      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done('Selected');
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { done('Copied'); }, fallback);
-    } else { fallback(); }
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.copy), text = el.textContent;
+      function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); }
+      function fallback() {
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done('Selected');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done('Copied'); }, fallback);
+      } else { fallback(); }
+    });
   });
 </script>
 </body>
