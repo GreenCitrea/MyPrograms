@@ -179,7 +179,10 @@ section[style*="--art"]::before {
 
 /* logos */
 .logo { width: 44px; height: 44px; flex: none; border-radius: 10px; display: block; }
-.logo.lg { width: 60px; height: 60px; border-radius: 14px; }
+.logo.lg { width: 84px; height: 84px; border-radius: 16px; object-fit: cover; }
+.audience { margin: 22px 0 0; font-family: var(--mono); font-size: 0.9rem; line-height: 1.9; color: var(--muted); max-width: 34em; }
+.audience span { color: var(--ink); }
+.audience span + span::before { content: " / "; color: var(--purple); }
 @media (max-width: 640px) { section { padding-block: 64px; } }
 .sec-head { display: grid; gap: 14px; margin-bottom: 48px; max-width: 40em; }
 .sec-head p { color: var(--muted); margin: 0; }
@@ -382,7 +385,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="portfolio">
         <article class="co flagship">
           <div class="co-top"><span class="co-meta">Flagship · Events · New York</span><span class="stage live">Live</span></div>
-          <div class="co-name"><img class="logo lg" src="assets/logos/fund.svg" alt="FUN&#39;D logo" width="44" height="44"><h3>FUN'D</h3></div>
+          <div class="co-name"><img class="logo lg" src="assets/logos/fund.jpg" alt="FUN&#39;D neon sign logo" width="84" height="84"><h3>FUN'D</h3></div>
           <p>A comedy pitch show. Founders pitch, the room laughs, and the best ideas get remembered. FUN'D brings startup culture and stand-up together on one stage in New York.</p>
           <div class="links">
             <a href="https://instagram.com/fund.nyc" target="_blank" rel="noopener">Instagram · @fund.nyc ↗</a>
@@ -459,6 +462,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap contact">
       <div>
         <div class="eyebrow">04 · Contact</div>
+        <p class="audience"><span>Founders</span><span>VCs</span><span>People who want to build things together</span><span>Anyone</span></p>
         <h2 style="margin-top:14px">Let's start a <em>conversation.</em></h2>
       </div>
       <div class="mailbox">
