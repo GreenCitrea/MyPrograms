@@ -21,6 +21,8 @@
   --blue: #2c58b5;
   --sand: #c8b48f;
   --glow: rgba(90, 62, 166, 0.10);
+  --art-opacity: 0.13;
+  --art-filter: none;
   --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --body: "Manrope", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -30,12 +32,14 @@
   :root:not([data-theme="light"]) {
     --bg: #14122a; --surface: #1c1a38; --line: #2f2c52; --ink: #ede5d6; --muted: #a9a3bf;
     --purple: #ae98f2; --blue: #82a5f2; --sand: #c9b48c; --glow: rgba(174, 152, 242, 0.12);
+    --art-opacity: 0.2; --art-filter: invert(1) hue-rotate(180deg) saturate(1.4);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #14122a; --surface: #1c1a38; --line: #2f2c52; --ink: #ede5d6; --muted: #a9a3bf;
   --purple: #ae98f2; --blue: #82a5f2; --sand: #c9b48c; --glow: rgba(174, 152, 242, 0.12);
+  --art-opacity: 0.2; --art-filter: invert(1) hue-rotate(180deg) saturate(1.4);
   color-scheme: dark;
 }
 
@@ -112,6 +116,13 @@ h3 { font-size: 1.7rem; }
   opacity: 0.55;
   mask-image: linear-gradient(to bottom, #000 30%, transparent);
 }
+.hero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: var(--art) right bottom / min(760px, 90%) auto no-repeat;
+  opacity: calc(var(--art-opacity) * 1.4); filter: var(--art-filter);
+  mask-image: linear-gradient(to left, #000 20%, transparent 85%);
+}
+.hero .wrap { z-index: 1; }
 .hero .wrap {
   position: relative;
   display: grid; gap: 48px; align-items: center;
@@ -157,7 +168,18 @@ h3 { font-size: 1.7rem; }
 .memo dd .tag { color: var(--blue); }
 
 /* ---------- sections ---------- */
-section { padding-block: 96px; border-top: 1px solid var(--line); }
+section { position: relative; overflow: hidden; padding-block: 96px; border-top: 1px solid var(--line); }
+section > .wrap { position: relative; z-index: 1; }
+/* Background art: each section sets --art. To use a photo instead, point --art at it, e.g. url(assets/photos/athens.jpg). */
+section[style*="--art"]::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: var(--art) var(--art-pos, right center) / var(--art-size, min(820px, 95%)) auto no-repeat;
+  opacity: var(--art-opacity); filter: var(--art-filter);
+}
+
+/* logos */
+.logo { width: 44px; height: 44px; flex: none; border-radius: 10px; display: block; }
+.logo.lg { width: 60px; height: 60px; border-radius: 14px; }
 @media (max-width: 640px) { section { padding-block: 64px; } }
 .sec-head { display: grid; gap: 14px; margin-bottom: 48px; max-width: 40em; }
 .sec-head p { color: var(--muted); margin: 0; }
@@ -201,6 +223,7 @@ section { padding-block: 96px; border-top: 1px solid var(--line); }
 .stage.live { color: var(--blue); }
 .stage.build { color: var(--purple); }
 .co h3 { font-size: 2rem; }
+.co-name { display: flex; align-items: center; gap: 16px; }
 .co.flagship h3 { font-size: clamp(2.4rem, 5vw, 3.4rem); }
 .co p { margin: 0; color: var(--muted); max-width: 40em; }
 .terms { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--mono); font-size: 0.78rem; color: var(--muted); margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); }
@@ -214,10 +237,12 @@ section { padding-block: 96px; border-top: 1px solid var(--line); }
 @media (max-width: 880px) { .record { grid-template-columns: minmax(0, 1fr); gap: 48px; } }
 .record h3 { font-size: 1.3rem; font-family: var(--mono); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .ledger { list-style: none; margin: 0; padding: 0; }
-.ledger li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 20px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.ledger li { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 4px 16px; padding: 20px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
 .ledger .t { font-family: var(--display); font-size: 1.5rem; font-weight: 600; line-height: 1.2; }
-.ledger .s { grid-column: 1; color: var(--muted); font-size: 0.95rem; }
-.ledger .k { grid-row: 1; grid-column: 2; font-family: var(--mono); font-size: 0.75rem; color: var(--purple); white-space: nowrap; }
+.ledger .logo { grid-row: 1 / span 2; align-self: center; }
+.ledger .t { grid-column: 2; }
+.ledger .s { grid-column: 2; color: var(--muted); font-size: 0.95rem; }
+.ledger .k { grid-row: 1; grid-column: 3; font-family: var(--mono); font-size: 0.75rem; color: var(--purple); white-space: nowrap; }
 
 /* ---------- quote ---------- */
 .quote { text-align: left; }
@@ -261,6 +286,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <li><a href="#about">About</a></li>
       <li><a href="#ventures">Ventures</a></li>
       <li><a href="#record">Record</a></li>
+      <li><a href="https://www.linkedin.com/in/caroline-zhang123/" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -271,12 +297,14 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <span><b>FUN'D</b> <span class="up">▲ LIVE</span> · comedy pitch show, NYC</span>
     <span><b>TOGETHER</b> <span class="bld">◆ BUILDING</span> · event infrastructure</span>
     <span><b>BITE</b> <span class="bld">◆ BUILDING</span> · in progress</span>
+    <span><b>NY THINK WEEK</b> <span class="bld">◆ BUILDING</span> · ideas, New York</span>
     <span><b>CAROLINE'S SYSTEM</b> <span class="up">▲ LIVE</span> · operating system</span>
     <span><b>NYU STERN</b> · Finance + Philosophy · Class of 2030</span>
     <span><b>SAN DIEGO → NEW YORK</b> · 2,430 mi</span>
     <span><b>FUN'D</b> <span class="up">▲ LIVE</span> · comedy pitch show, NYC</span>
     <span><b>TOGETHER</b> <span class="bld">◆ BUILDING</span> · event infrastructure</span>
     <span><b>BITE</b> <span class="bld">◆ BUILDING</span> · in progress</span>
+    <span><b>NY THINK WEEK</b> <span class="bld">◆ BUILDING</span> · ideas, New York</span>
     <span><b>CAROLINE'S SYSTEM</b> <span class="up">▲ LIVE</span> · operating system</span>
     <span><b>NYU STERN</b> · Finance + Philosophy · Class of 2030</span>
     <span><b>SAN DIEGO → NEW YORK</b> · 2,430 mi</span>
@@ -284,7 +312,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 </div>
 
 <main id="top">
-  <div class="hero">
+  <div class="hero" style="--art: url(assets/art/skyline.svg)">
     <div class="wrap">
       <div>
         <div class="eyebrow rise">Finance + Philosophy · NYU Stern</div>
@@ -310,7 +338,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </div>
 
-  <section id="about">
+  <section id="about" style="--art: url(assets/art/temple.svg); --art-pos: right bottom">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">01 · The thesis</div>
@@ -344,7 +372,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 
-  <section id="ventures">
+  <section id="ventures" style="--art: url(assets/art/network.svg); --art-size: cover; --art-pos: center">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">02 · Portfolio</div>
@@ -354,7 +382,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="portfolio">
         <article class="co flagship">
           <div class="co-top"><span class="co-meta">Flagship · Events · New York</span><span class="stage live">Live</span></div>
-          <h3>FUN'D</h3>
+          <div class="co-name"><img class="logo lg" src="assets/logos/fund.svg" alt="FUN&#39;D logo" width="44" height="44"><h3>FUN'D</h3></div>
           <p>A comedy pitch show. Founders pitch, the room laughs, and the best ideas get remembered. FUN'D brings startup culture and stand-up together on one stage in New York.</p>
           <div class="links">
             <a href="https://instagram.com/fund.nyc" target="_blank" rel="noopener">Instagram · @fund.nyc ↗</a>
@@ -365,21 +393,28 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
         <article class="co">
           <div class="co-top"><span class="co-meta">Productivity · Personal</span><span class="stage live">Live</span></div>
-          <h3>Caroline's System</h3>
+          <div class="co-name"><img class="logo" src="assets/logos/system.svg" alt="Caroline&#39;s System logo" width="44" height="44"><h3>Caroline's System</h3></div>
           <p>My personal operating system for running projects, events, and school without dropping anything.</p>
           <div class="terms"><span>Role <b>Creator</b></span><span>Sector <b>Operations</b></span></div>
         </article>
 
         <article class="co">
           <div class="co-top"><span class="co-meta">Consumer · Stealth</span><span class="stage build">Building</span></div>
-          <h3>BITE</h3>
+          <div class="co-name"><img class="logo" src="assets/logos/bite.svg" alt="BITE logo" width="44" height="44"><h3>BITE</h3></div>
           <p>In progress. Details coming soon.</p>
           <div class="terms"><span>Role <b>Founder</b></span><span>Stage <b>Pre-seed</b></span></div>
         </article>
 
-        <article class="co flagship">
+        <article class="co">
+          <div class="co-top"><span class="co-meta">Events · Ideas · New York</span><span class="stage build">Building</span></div>
+          <div class="co-name"><img class="logo" src="assets/logos/think-week.svg" alt="New York Think Week logo" width="44" height="44"><h3>New York Think Week</h3></div>
+          <p>A week of talks, conversations, and big questions in New York, built for students who think across finance, philosophy, and startups.</p>
+          <div class="terms"><span>Role <b>Founder</b></span><span>Sector <b>Events × Ideas</b></span><span>City <b>NYC</b></span></div>
+        </article>
+
+        <article class="co">
           <div class="co-top"><span class="co-meta">Infrastructure · Events</span><span class="stage build">Building</span></div>
-          <h3>Together</h3>
+          <div class="co-name"><img class="logo" src="assets/logos/together.svg" alt="Together logo" width="44" height="44"><h3>Together</h3></div>
           <p>A backend event-planning platform that weaves fragmented markets together. Venues, vendors, hosts, and guests are scattered across a dozen tools today. Together connects them into one system.</p>
           <div class="terms"><span>Role <b>Founder</b></span><span>Sector <b>Marketplaces</b></span><span>Stage <b>Pre-seed</b></span></div>
         </article>
@@ -387,7 +422,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 
-  <section id="record">
+  <section id="record" style="--art: url(assets/art/arches.svg); --art-pos: right bottom">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">03 · Track record</div>
@@ -397,30 +432,30 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <div>
           <h3>Education</h3>
           <ul class="ledger">
-            <li><span class="t">NYU Stern School of Business</span><span class="k">2026 – 2030</span><span class="s">B.S. Business · Finance + Philosophy · Breakthrough Scholar</span></li>
-            <li><span class="t">Torrey Pines High School</span><span class="k">San Diego</span><span class="s">San Diego, California</span></li>
+            <li><img class="logo" src="assets/logos/nyu.svg" alt="NYU logo" width="44" height="44"><span class="t">NYU Stern School of Business</span><span class="k">2026 – 2030</span><span class="s">B.S. Business · Finance + Philosophy · Breakthrough Scholar</span></li>
+            <li><img class="logo" src="assets/logos/torrey-pines.svg" alt="Torrey Pines High School logo" width="44" height="44"><span class="t">Torrey Pines High School</span><span class="k">San Diego</span><span class="s">San Diego, California</span></li>
           </ul>
         </div>
         <div>
           <h3>Honors</h3>
           <ul class="ledger">
-            <li><span class="t">Hodson Scholar</span><span class="k">JHU</span><span class="s">Johns Hopkins University</span></li>
-            <li><span class="t">Breakthrough Scholar</span><span class="k">NYU Stern</span><span class="s">Stern School of Business</span></li>
-            <li><span class="t">Rising Star Award</span><span class="k">Encinitas</span><span class="s">Encinitas Chamber of Commerce</span></li>
+            <li><img class="logo" src="assets/logos/jhu.svg" alt="Johns Hopkins University logo" width="44" height="44"><span class="t">Hodson Trust Scholar</span><span class="k">JHU</span><span class="s">Johns Hopkins University</span></li>
+            <li><img class="logo" src="assets/logos/stern.svg" alt="NYU Stern logo" width="44" height="44"><span class="t">Breakthrough Scholar</span><span class="k">NYU Stern</span><span class="s">Stern School of Business</span></li>
+            <li><img class="logo" src="assets/logos/encinitas.svg" alt="Encinitas Chamber of Commerce logo" width="44" height="44"><span class="t">Rising Star Award</span><span class="k">Encinitas</span><span class="s">Encinitas Chamber of Commerce</span></li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="quote">
+  <section class="quote" style="--art: url(assets/art/temple.svg); --art-pos: right center; --art-size: min(560px, 80%)">
     <div class="wrap">
       <blockquote>The unexamined life is not worth living.</blockquote>
       <cite>Socrates, in Plato's Apology · 38a</cite>
     </div>
   </section>
 
-  <section id="contact">
+  <section id="contact" style="--art: url(assets/art/skyline.svg); --art-pos: right bottom; --art-size: min(700px, 90%)">
     <div class="wrap contact">
       <div>
         <div class="eyebrow">04 · Contact</div>
@@ -432,6 +467,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <button class="copy" id="copy" type="button">Copy</button>
         </div>
         <div class="socials links">
+          <a href="https://www.linkedin.com/in/caroline-zhang123/" target="_blank" rel="noopener">LinkedIn ↗</a>
           <a href="https://instagram.com/fund.nyc" target="_blank" rel="noopener">FUN'D on Instagram ↗</a>
           <a href="https://luma.com/fundnyc" target="_blank" rel="noopener">Upcoming shows ↗</a>
         </div>
